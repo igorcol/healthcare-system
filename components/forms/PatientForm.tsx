@@ -43,14 +43,35 @@ export default function PatientForm() {
           <p className="text-dark-700">Schedule your first appointment</p>
         </section>
         
+        {/* FULL NAME FIELD */}
         <CustomFormField 
           fieldType={FormFieldType.INPUT}
           control={form.control} 
           name='name'
-          label='full name'
-          placehlder='Jhon dow'
+          label='Full Name'
+          placeholder='Jhon dee'
           iconSrc='assets/icons/user.svg'
           iconAlt='user'
+        />
+        
+        {/* EMAIL FIELD */}
+        <CustomFormField 
+          fieldType={FormFieldType.INPUT}
+          control={form.control} 
+          name='email'
+          label='Email'
+          placeholder='m@example.com'
+          iconSrc='assets/icons/email.svg'
+          iconAlt='email'
+        />
+        
+        {/* PHONE FIELD */}
+        <CustomFormField 
+          fieldType={FormFieldType.PHONE_INPUT}
+          control={form.control} 
+          name='phone'
+          label='Phone Number'
+          placeholder='(15) 91234-5678'
         />
 
         <Button type="submit">Submit</Button>
