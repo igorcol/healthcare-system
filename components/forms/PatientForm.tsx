@@ -8,6 +8,8 @@ import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { UserFormValidation } from "@/lib/validation";
+import { createUser } from "@/lib/actions/patient.actions";
+import { useRouter } from "next/navigation";
 
 export enum FormFieldType {
   INPUT = 'input',
@@ -20,7 +22,7 @@ export enum FormFieldType {
 }
 
 export default function PatientForm() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
@@ -35,10 +37,14 @@ export default function PatientForm() {
   async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
     setIsLoading(true)
     try {
+      console.log("DEBUG 1. try")
       const userData = {name, email, phone}
 
-      //TODO : 58:15
+      const user = await createUser(userData);
+      console.log("DEBUG 2. pós createUser")
+      console.log(user)
 
+      if(user) router.push(`/patients/${user.$id}/register`)
     } 
     catch (error) {
       console.log('❌ | Error while submiting form:', error)
