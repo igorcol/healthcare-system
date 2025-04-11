@@ -13,6 +13,9 @@ export const {
 
 const client = new sdk.Client();
 
+console.log("🔎 Endpoint usado:", process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT);
+
+
 client
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
     .setProject(process.env.APPWRITE_PROJECT_ID!)
