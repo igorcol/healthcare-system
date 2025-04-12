@@ -38,7 +38,7 @@ const page = async ({params: {userId}}: SearchParamProps) => {
         alt="register banner"
         height={1000}
         width={1000}
-        className="side-img max-w-[390px]]"
+        className="side-img max-w-[390px]"
       />
     </div>
   );
