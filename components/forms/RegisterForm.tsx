@@ -323,6 +323,7 @@ export default function RegisterForm({ user }: { user: User }) {
           </div>
         </section>
 
+        {/* Treatment consent */}
         <CustomFormField
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
@@ -330,6 +331,7 @@ export default function RegisterForm({ user }: { user: User }) {
           label="I consent to treatment"
         />
 
+        {/* Disclosure consent */}
         <CustomFormField
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
@@ -337,6 +339,7 @@ export default function RegisterForm({ user }: { user: User }) {
           label="I consent to disclosure of information"
         />
 
+        {/* Privacy consent */}
         <CustomFormField
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
@@ -344,9 +347,9 @@ export default function RegisterForm({ user }: { user: User }) {
           label="I consent to privacy policy"
         />
 
-        <div className="flex flex-col gap-6 xl:flex-row"></div>
-
+        {/* Submit Button */}
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+
       </form>
     </Form>
   );
