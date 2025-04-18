@@ -7,16 +7,16 @@ import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { useState } from "react";
-import { PatientFormValidation, UserFormValidation } from "@/lib/validation";
-import { createUser } from "@/lib/actions/patient.actions";
+import { PatientFormValidation } from "@/lib/validation";
+import { registerPatient } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constants";
 import { Label } from "../ui/label";
-import { SelectItem } from "@radix-ui/react-select";
 import Image from "next/image";
 import FileUploader from "../FileUploader";
+import { SelectItem } from "../ui/select";
 
 export default function RegisterForm({ user }: { user: User }) {
   const router = useRouter();
@@ -26,13 +26,14 @@ export default function RegisterForm({ user }: { user: User }) {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      name: "",
-      email: "",
-      phone: "",
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     },
   });
 
   async function onSubmit(values : z.infer<typeof PatientFormValidation>) {
+    console.log("<> REGISTER FORM SUBMIT")
     setIsLoading(true);
 
     let formData;
@@ -52,6 +53,7 @@ export default function RegisterForm({ user }: { user: User }) {
         birthDate: new Date(values.birthDate),
         identificationDocument: formData
       }
+      // @ts-expect-error: allergies is optional but required 
       const patient = await registerPatient(patientData);
 
       if (patient) router.push(`/patients/${user.$id}/new-appointment`);
@@ -206,13 +208,13 @@ export default function RegisterForm({ user }: { user: User }) {
         <CustomFormField
           fieldType={FormFieldType.SELECT}
           control={form.control}
-          name="primaryPhysicial"
-          label="Primary Physicial"
+          name="primaryPhysician"
+          label="Primary Physician"
           placeholder="Select a physician"
         >
           {Doctors.map((doctor) => (
             <SelectItem key={doctor.name} value={doctor.name}>
-              <div className="flex cursor-point items-center gap-2">
+              <div className="flex cursor-pointer items-center gap-2">
                 <Image
                   src={doctor.image}
                   width={32}

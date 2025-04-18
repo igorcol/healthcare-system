@@ -57,20 +57,26 @@ export const registerPatient = async ({ identificationDocument, ...patient }: Re
             file = await storage.createFile(APPWRITE_BUCKET_ID!, ID.unique(), inputFile);
         }
 
+        console.log({
+            identificationDocumentId: file?.$id || null,
+            identificationDocumentUrl: `${NEXT_PUBLIC_APPWRITE_ENDPOINT!}/storage/buckets/${APPWRITE_BUCKET_ID!}/files/${file?.$id}/view?project=${APPWRITE_PROJECT_ID!}`,
+        })
+
         const newPatient = await databases.createDocument(
             APPWRITE_DATABASE_ID!,
             APPWRITE_PATIENT_COLLECTION_ID!,
             ID.unique(),
             {
+                ...patient,
                 identificationDocumentId: file?.$id || null,
                 identificationDocumentUrl: `${NEXT_PUBLIC_APPWRITE_ENDPOINT!}/storage/buckets/${APPWRITE_BUCKET_ID!}/files/${file?.$id}/view?project=${APPWRITE_PROJECT_ID!}`,
-                ...patient
             }
         )
 
+        console.log('Registration OK')
         return parseStringify(newPatient);
 
     } catch (error) {
-        console.log(error)
+        console.log('Registration error: ', error)
     }
 }

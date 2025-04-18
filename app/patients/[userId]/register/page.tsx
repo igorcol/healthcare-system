@@ -1,10 +1,16 @@
 import RegisterForm from "@/components/forms/RegisterForm";
 import { getUser } from "@/lib/actions/patient.actions";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
-const page = async ({ params: { userId } }: SearchParamProps) => {
+interface PageProps {
+  params: Promise<{
+    userId: string;
+  }>;
+}
+
+const page = async ({ params }: PageProps) => {
+  const { userId } = await params;
   const user = await getUser(userId);
 
   return (
