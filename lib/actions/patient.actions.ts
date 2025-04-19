@@ -57,10 +57,10 @@ export const registerPatient = async ({ identificationDocument, ...patient }: Re
             file = await storage.createFile(APPWRITE_BUCKET_ID!, ID.unique(), inputFile);
         }
 
-        console.log({
-            identificationDocumentId: file?.$id || null,
-            identificationDocumentUrl: `${NEXT_PUBLIC_APPWRITE_ENDPOINT!}/storage/buckets/${APPWRITE_BUCKET_ID!}/files/${file?.$id}/view?project=${APPWRITE_PROJECT_ID!}`,
-        })
+        // console.log({
+        //     identificationDocumentId: file?.$id || null,
+        //     identificationDocumentUrl: `${NEXT_PUBLIC_APPWRITE_ENDPOINT!}/storage/buckets/${APPWRITE_BUCKET_ID!}/files/${file?.$id}/view?project=${APPWRITE_PROJECT_ID!}`,
+        // })
 
         const newPatient = await databases.createDocument(
             APPWRITE_DATABASE_ID!,
@@ -78,5 +78,21 @@ export const registerPatient = async ({ identificationDocument, ...patient }: Re
 
     } catch (error) {
         console.log('Registration error: ', error)
+    }
+}
+
+export const getPatient = async (userId: string) => {
+    try {
+        
+        const patients = await databases.listDocuments(
+            APPWRITE_DATABASE_ID!,
+            APPWRITE_PATIENT_COLLECTION_ID!,
+            [ Query.equal('userId', userId) ]
+        );
+
+        return parseStringify(patients.documents[0]);
+
+    } catch (error) {
+        console.log(error)
     }
 }
