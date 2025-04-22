@@ -1,14 +1,16 @@
-import DataTable from "@/components/table/DataTable";
+import { DataTable } from "@/components/table/DataTable";
 import StatCard from "@/components/StatCard";
 import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import columns from "@/components/table/columns";
+import { columns, Payment } from "@/components/table/columns";
+
+
 
 const Admin = async () => {
-    // Fetch appointment data
-    const appointments = await getRecentAppointmentList();
+  // Fetch appointment data
+  const appointments = await getRecentAppointmentList();
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
@@ -56,11 +58,7 @@ const Admin = async () => {
         </section>
 
         {/* Data Table */}
-        <DataTable
-            data={appointments.documents}
-            columns={columns}
-        />
-
+        <DataTable data={appointments.documents} columns={columns} /> 
       </main>
     </div>
   );
